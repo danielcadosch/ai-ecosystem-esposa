@@ -1,6 +1,14 @@
 {
   "model": "sonnet",
   "effortLevel": "medium",
+  "mcpServers": {
+    "markitdown": {
+      "command": "uvx",
+      "args": [
+        "markitdown-mcp"
+      ]
+    }
+  },
   "env": {
     "CLAUDE_CODE_SUBAGENT_MODEL": "haiku",
     "MAX_THINKING_TOKENS": "8000",
