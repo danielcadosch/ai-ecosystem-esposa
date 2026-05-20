@@ -11,14 +11,12 @@ Todos los tools MCP son **deferred**: el schema no está cargado por defecto.
 Siempre hacer ToolSearch primero o la llamada falla con `InputValidationError`.
 
 ```
-# Patrón correcto
 ToolSearch({ query: "select:mcp__github__push_files,mcp__github__get_file_contents" })
-# Luego llamar el tool
 ```
 
 ---
 
-## MCPs disponibles en este entorno remoto
+## MCPs disponibles en este entorno
 
 ### GitHub — `mcp__github__*`
 Restringido al repo `danielcadosch/ai-ecosystem-esposa`.
@@ -111,26 +109,18 @@ Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflo
 | "busca el email", "redacta un mail", "gmail" | `skills/gmail/SKILL.md` |
 | "busca en Drive", "lee el doc", "archivo de Google" | `skills/google-drive/SKILL.md` |
 | "campañas", "ads", "facebook", "instagram", "meta" | `skills/meta-ads/SKILL.md` |
-
-**Skills locales (solo disponibles con Claude Desktop en Windows):**
-| Trigger | Skill |
-|---|---|
-| "navega a", "formulario", "scraping" | `skills/comet-browser/SKILL.md` |
 | "organiza archivos", "script", "procesa CSV" | `skills/open-interpreter/SKILL.md` |
-| "usa Gemini", "tarea larga" | `skills/antigravity/SKILL.md` |
-| "busca en mis documentos" | `skills/notebooklm/SKILL.md` |
-| "busca con fuentes" | `skills/perplexity-search/SKILL.md` |
-| "modelo local", "offline" | `skills/ollama-local/SKILL.md` |
+| "busca en mis documentos", "en mi notebook" | `skills/notebooklm/SKILL.md` |
 
 ---
 
 ## Reglas de eficiencia
 
-- **Lanzar agentes en paralelo** cuando las tareas son independientes — usar el tool `Agent` con múltiples llamadas en el mismo mensaje.
+- **Lanzar agentes en paralelo** cuando las tareas son independientes.
 - **GitHub**: preferir `push_files` (múltiples archivos en un commit) sobre commits individuales.
 - **n8n**: NUNCA saltear `get_node_types` — los nombres de parámetros incorrectos generan workflows inválidos.
-- **Gmail**: usar `create_draft` y mostrar el borrador al usuario antes de cualquier envío. No enviar sin confirmación explícita.
-- **Meta Ads**: leer antes de escribir — siempre verificar la estructura de cuenta/campaña antes de crear o modificar.
+- **Gmail**: usar `create_draft` y mostrar al usuario antes de cualquier envío. No enviar sin confirmación explícita.
+- **Meta Ads**: leer antes de escribir — verificar estructura de cuenta antes de crear o modificar.
 - **Bash pre-aprobados**: git, ls, find, grep, cat — sin prompts de permiso.
 
 ---
@@ -139,4 +129,4 @@ Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflo
 
 - **NUNCA** commitear API keys reales. Usar placeholders `TU_KEY_AQUI`.
 - Si se commitea una key accidentalmente: rotarla de inmediato en el proveedor.
-- Antes de cualquier acción destructiva (delete, force push, drop): confirmar con el usuario.
+- Antes de cualquier acción destructiva (delete, force push): confirmar con Daniel.
