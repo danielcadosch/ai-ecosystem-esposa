@@ -117,7 +117,27 @@ if ($ollamaCheck) {
 }
 
 # ============================================================
-# PASO 6 — NotebookLM MCP
+# PASO 6 — Claude Ads (skills + agents de publicidad)
+# ============================================================
+Log-Step "Instalando Claude Ads (AgriciDaniel/claude-ads)..."
+$claudeAdsSkill = "$env:USERPROFILE\.claude\skills\ads"
+if (Test-Path "$claudeAdsSkill\SKILL.md") {
+    Log-Skip "Claude Ads ya instalado en $claudeAdsSkill"
+} else {
+    $tempDir = [System.IO.Path]::GetTempPath() + "claude-ads-" + [System.Guid]::NewGuid().ToString("N")
+    git clone --depth 1 https://github.com/AgriciDaniel/claude-ads $tempDir 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        & "$tempDir\install.ps1" -Target claude
+        if ($LASTEXITCODE -eq 0) { Log-OK "Claude Ads instalado (22 sub-skills + 10 agentes)" }
+        else { Log-Fail "Claude Ads — el installer interno fallo" }
+        Remove-Item -Recurse -Force $tempDir -ErrorAction SilentlyContinue
+    } else {
+        Log-Fail "Claude Ads — no se pudo clonar https://github.com/AgriciDaniel/claude-ads"
+    }
+}
+
+# ============================================================
+# PASO 7 — NotebookLM MCP
 # ============================================================
 Log-Step "Instalando NotebookLM MCP..."
 $pip = Get-Command pip -ErrorAction SilentlyContinue
@@ -135,7 +155,7 @@ if ($pip) {
 }
 
 # ============================================================
-# PASO 7 — Antigravity (solo extension de Chrome)
+# PASO 8 — Antigravity (solo extension de Chrome)
 # ============================================================
 Log-Step "Verificando Antigravity..."
 Log-Note "Antigravity es una extension de Chrome, no tiene instalador CLI."
@@ -143,7 +163,7 @@ Log-Note "Instala manualmente desde: https://chromewebstore.google.com (busca 'A
 $skipped += "Antigravity (requiere instalacion manual desde Chrome Web Store)"
 
 # ============================================================
-# PASO 8 — Copiar archivos de configuracion
+# PASO 9 — Copiar archivos de configuracion
 # ============================================================
 Log-Step "Copiando archivos de configuracion..."
 
@@ -181,7 +201,7 @@ if (Test-Path $oiSrc) {
 } else { Log-Note "configs\open-interpreter\config.yaml no encontrado, omitiendo" }
 
 # ============================================================
-# PASO 9 — Copiar skills a ~/.claude/skills/
+# PASO 10 — Copiar skills a ~/.claude/skills/
 # ============================================================
 Log-Step "Copiando skills a ~/.claude/skills/..."
 $skillsDst = "$env:USERPROFILE\.claude\skills"
@@ -224,7 +244,7 @@ Write-Host "============================================================" -Foreg
 Write-Host "=== INSTALLATION COMPLETE ===" -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Arms installed: Desktop Commander, Open Interpreter, Ollama, NotebookLM MCP" -ForegroundColor Green
+Write-Host "Arms installed: Desktop Commander, Open Interpreter, Ollama, NotebookLM MCP, Claude Ads" -ForegroundColor Green
 Write-Host "Skills copied to: ~/.claude/skills/" -ForegroundColor Green
 Write-Host "Config copied to: %APPDATA%\Claude\claude_desktop_config.json" -ForegroundColor Green
 Write-Host ""
