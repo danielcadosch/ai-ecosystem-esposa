@@ -4,6 +4,10 @@
 # Ejecutar como Administrador en un PC Windows nuevo:
 #   Set-ExecutionPolicy Bypass -Scope Process -Force
 #   .\install.ps1
+#
+# Incluye: Desktop Commander, Open Interpreter, Ollama,
+#          NotebookLM MCP, skills (comet, OI, antigravity,
+#          notebooklm, perplexity-search, ollama-local)
 # ============================================================
 
 param(

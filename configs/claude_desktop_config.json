@@ -26,6 +26,17 @@
       "env": {
         "OLLAMA_HOST": "http://localhost:11434"
       }
+    },
+    "notebooklm": {
+      "command": "python",
+      "args": [
+        "-m",
+        "notebooklm_mcp"
+      ],
+      "env": {
+        "GOOGLE_CLIENT_ID": "TU_GOOGLE_CLIENT_ID_AQUI",
+        "GOOGLE_CLIENT_SECRET": "TU_GOOGLE_CLIENT_SECRET_AQUI"
+      }
     }
   },
   "preferences": {
