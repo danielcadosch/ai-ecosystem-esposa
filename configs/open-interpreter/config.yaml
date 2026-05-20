@@ -1,9 +1,0 @@
-# Perfil por defecto — Ollama (dolphin-mistral, tareas generales y control de PC)
-llm:
-  model: ollama/dolphin-mistral
-  api_base: http://localhost:11434
-  max_tokens: 4096
-  context_window: 8192
-
-auto_run: false
-safe_mode: off
