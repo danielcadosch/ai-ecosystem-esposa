@@ -12,7 +12,7 @@ Delega a Open Interpreter cuando la tarea requiere ejecutar código para automat
 - Cualquier tarea repetitiva que se resuelve mejor con código Python/bash
 
 ## Pasos
-1. ToolSearch({ query: "computer-use", max_results: 30 })
+1. ToolSearch({ query: "computer-use", max_results: 5 })
 2. Redactar instrucción completa con rutas, formato esperado y condiciones
 3. mcp__computer-use__write_clipboard({ text: "<instrucción>" })
 4. mcp__computer-use__request_access({ applications: ["interpreter"] })

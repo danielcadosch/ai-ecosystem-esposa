@@ -10,7 +10,7 @@ Delega a Antigravity cuando necesites un agente basado en Gemini para ejecutar t
 - Segunda opinión con modelo diferente
 
 ## Pasos
-1. ToolSearch({ query: "computer-use", max_results: 30 })
+1. ToolSearch({ query: "computer-use", max_results: 5 })
 2. Redactar instrucción autosuficiente (Antigravity no tiene contexto previo)
 3. mcp__computer-use__write_clipboard({ text: "<instrucción>" })
 4. mcp__computer-use__request_access({ applications: ["Antigravity"] })

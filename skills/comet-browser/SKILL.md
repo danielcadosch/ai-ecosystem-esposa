@@ -12,7 +12,7 @@ Esta skill le enseña a Claude cómo delegar tareas de navegación web a **Perpl
 ## Instrucciones paso a paso
 
 ### Paso 1: Cargar tools de computer-use
-ToolSearch({ query: "computer-use", max_results: 30 })
+ToolSearch({ query: "computer-use", max_results: 5 })
 
 ### Paso 2: Pedir acceso a Comet
 mcp__computer-use__request_access({ applications: ["Comet"] })
