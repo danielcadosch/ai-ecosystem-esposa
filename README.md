@@ -15,8 +15,7 @@ Configuración de Claude Code para Daniel — optimizado para sesiones remotas.
     ├── gmail/                    ← Gmail MCP
     ├── google-drive/             ← Drive MCP
     ├── meta-ads/                 ← Meta Ads MCP
-    ├── open-interpreter/         ← Ejecución de código (local)
-    └── notebooklm/               ← Documentos propios (local)
+    └── notebooklm/               ← Documentos propios
 ```
 
 ## MCPs activos en sesiones remotas

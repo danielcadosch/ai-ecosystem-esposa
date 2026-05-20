@@ -104,12 +104,11 @@ Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflo
 | Trigger | Skill |
 |---|---|
 | "automatiza", "crea un workflow", "n8n" | `skills/n8n/SKILL.md` |
-| "crea un PR", "sube al repo", "commitea" | `skills/github/SKILL.md` |
+| "sube al repo", "commitea", "PR" | `skills/github/SKILL.md` |
 | "agenda", "calendario", "reunión", "evento" | `skills/google-calendar/SKILL.md` |
 | "busca el email", "redacta un mail", "gmail" | `skills/gmail/SKILL.md` |
 | "busca en Drive", "lee el doc", "archivo de Google" | `skills/google-drive/SKILL.md` |
 | "campañas", "ads", "facebook", "instagram", "meta" | `skills/meta-ads/SKILL.md` |
-| "organiza archivos", "script", "procesa CSV" | `skills/open-interpreter/SKILL.md` |
 | "busca en mis documentos", "en mi notebook" | `skills/notebooklm/SKILL.md` |
 
 ---
