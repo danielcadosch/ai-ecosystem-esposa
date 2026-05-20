@@ -5,11 +5,9 @@
 .env.local
 secrets.json
 secrets.yaml
-
-# Config local con keys reales (usar solo los placeholders del repo)
-configs/local/
 *.local.json
 *.local.yaml
+configs/local/
 
 # OS
 .DS_Store
@@ -25,7 +23,6 @@ desktop.ini
 __pycache__/
 *.pyc
 *.pyo
-*.egg-info/
 .venv/
 venv/
 

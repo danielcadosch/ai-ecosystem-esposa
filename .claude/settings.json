@@ -14,7 +14,6 @@
       "Bash(find . *)",
       "Bash(grep *)",
       "Bash(cat *)",
-      "Bash(npm list *)",
       "Bash(node --version)",
       "Bash(python --version)",
       "Bash(python3 --version)",

@@ -1,144 +1,142 @@
-# CLAUDE.md — Guía de operación para Claude Code
+# CLAUDE.md — Gold Standard para sesiones remotas de Claude Code
 
-Repositorio: **ai-ecosystem-esposa** (DanielCadosch/ai-ecosystem-esposa)
-Propósito: Configuración replicable del ecosistema AI en Windows para ocp316@gmail.com
+Usuario: **Daniel** (ocp316@gmail.com) · GitHub: `danielcadosch`  
+Repo activo: `danielcadosch/ai-ecosystem-esposa`
 
 ---
 
-## Ecosistema: herramientas y roles
+## REGLA #1 — ToolSearch antes de llamar cualquier MCP
 
-| Herramienta | Rol | Cuándo delegarle |
-|---|---|---|
-| **Claude Desktop** | Agente principal (tú) | Siempre — punto de entrada |
-| **Desktop Commander** | MCP: control de archivos y terminal | Leer/escribir archivos, ejecutar comandos en la PC del usuario |
-| **Perplexity MCP** | MCP: búsqueda web con citación | Búsquedas rápidas con fuentes verificadas |
-| **Comet** | Agente: navegación web autónoma | Formularios, scraping, tareas que requieren clic real en el browser |
-| **Open Interpreter** | Agente: ejecución de código Python/bash | Scripts en masa, organizar archivos, descargar contenido, procesar datos |
-| **Antigravity** | Agente: Gemini paralelo | Tareas largas de investigación para ahorrar tokens Claude; segunda opinión |
-| **NotebookLM** | MCP: consulta de documentos propios | Preguntas sobre documentos subidos por el usuario — cero tokens de contexto |
-| **Ollama** | Servidor LLM local (localhost:11434) | Inferencia local sin costo; backend de Open Interpreter |
+Todos los tools MCP son **deferred**: el schema no está cargado por defecto.  
+Siempre hacer ToolSearch primero o la llamada falla con `InputValidationError`.
 
-### Jerarquía de delegación (de menor a mayor autonomía)
 ```
-Perplexity MCP  →  búsquedas simples con fuentes
-Antigravity     →  investigación larga (paralela, distinto modelo)
-Comet           →  navegación real en el browser
-Open Interpreter →  ejecución de código/scripts en la PC
+# Patrón correcto
+ToolSearch({ query: "select:mcp__github__push_files,mcp__github__get_file_contents" })
+# Luego llamar el tool
 ```
 
 ---
 
-## Skills disponibles y sus triggers
+## MCPs disponibles en este entorno remoto
 
-| Skill | Archivo | Triggers clave |
-|---|---|---|
-| `comet-browser` | `skills/comet-browser/SKILL.md` | "busca en internet", "navega a", "formulario", "scraping" |
-| `open-interpreter` | `skills/open-interpreter/SKILL.md` | "organiza", "renombra", "descarga", "script", "procesa CSV" |
-| `antigravity` | `skills/antigravity/SKILL.md` | "usa Gemini", "tarea larga", "segunda opinión" |
-| `notebooklm` | `skills/notebooklm/SKILL.md` | "busca en mis documentos", "en mi notebook" |
-| `perplexity-search` | `skills/perplexity-search/SKILL.md` | "busca con fuentes", "qué dice la web sobre" |
-| `ollama-local` | `skills/ollama-local/SKILL.md` | "usa modelo local", "sin API", "offline" |
+### GitHub — `mcp__github__*`
+Restringido al repo `danielcadosch/ai-ecosystem-esposa`.
 
----
-
-## Estructura de archivos
-
-```
-ai-ecosystem-esposa/
-├── CLAUDE.md                            ← Esta guía (leída automáticamente por Claude Code)
-├── README.md                            ← Guía de usuario/instalación
-├── install.ps1                          ← Instalador principal (PASO 3 del setup)
-├── bootstrap.ps1                        ← Bootstrap para PC virgen (PASO 1: git, node, python, claude)
-├── setup_git.ps1                        ← Inicialización de git local (solo necesario 1 vez)
-├── .gitignore                           ← Protege API keys reales
-├── .claude/
-│   └── settings.json                    ← Permisos preaprobados para Claude Code (este repo)
-├── configs/
-│   ├── settings.json                    ← Configuración de Claude Code (~/.claude/settings.json)
-│   ├── claude_desktop_config.json       ← MCPs de Claude Desktop (%APPDATA%\Claude\)
-│   └── open-interpreter/
-│       └── config.yaml                  ← Perfil Ollama de Open Interpreter
-└── skills/
-    ├── comet-browser/SKILL.md
-    ├── open-interpreter/SKILL.md
-    ├── antigravity/SKILL.md
-    ├── notebooklm/SKILL.md
-    ├── perplexity-search/SKILL.md       ← NUEVO
-    └── ollama-local/SKILL.md            ← NUEVO
-```
-
----
-
-## Destinos de instalación en Windows
-
-| Archivo fuente | Destino en Windows |
+| Tool | Para qué sirve |
 |---|---|
-| `configs/claude_desktop_config.json` | `%APPDATA%\Claude\claude_desktop_config.json` |
-| `configs/settings.json` | `%USERPROFILE%\.claude\settings.json` |
-| `configs/open-interpreter/config.yaml` | `%USERPROFILE%\.config\open-interpreter\config.yaml` |
-| `skills/*/SKILL.md` | `%USERPROFILE%\.claude\skills\*/SKILL.md` |
+| `mcp__github__get_file_contents` | Leer archivos del repo |
+| `mcp__github__push_files` | Subir múltiples archivos en un commit |
+| `mcp__github__create_branch` | Crear branches |
+| `mcp__github__list_pull_requests` | Ver PRs abiertos |
+| `mcp__github__pull_request_read` | Leer PR completo (diff, comentarios) |
+| `mcp__github__add_issue_comment` | Comentar en issues/PRs |
+| `mcp__github__search_code` | Buscar código en el repo |
+| `mcp__github__list_commits` | Ver historial de commits |
+| `mcp__github__subscribe_pr_activity` | Escuchar eventos de PR (CI, reviews) |
 
----
+### n8n Workflow Automation — `mcp__6fe38136__*`
+Construir, validar y publicar workflows de automatización.
 
-## Tareas comunes de mantenimiento
+**Flujo obligatorio para crear un workflow:**
+1. `get_sdk_reference` — leer patrones y guías del SDK
+2. `search_nodes` — buscar nodos por servicio (ej: "gmail", "schedule")
+3. `get_node_types` — obtener tipos exactos de parámetros (NO saltear este paso)
+4. `validate_workflow` — validar el código antes de crear
+5. `create_workflow_from_code` — crear en n8n
+6. `publish_workflow` — activar
 
-### Agregar una nueva skill
-1. Crear `skills/<nombre>/SKILL.md` con la plantilla estándar.
-2. El `install.ps1` la copiará automáticamente a `~/.claude/skills/` al reinstalar.
-3. Documentarla en la tabla de skills de este CLAUDE.md.
+Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflow`, `execute_workflow`, `get_execution`
 
-### Agregar un nuevo MCP
-1. Editar `configs/claude_desktop_config.json` — agregar entrada en `mcpServers`.
-2. Si requiere instalación: agregar el paso correspondiente en `install.ps1`.
-3. Si tiene skill asociada: crear `skills/<nombre>/SKILL.md`.
+### Google Calendar — `mcp__68c285f0__*`
 
-### Actualizar el repositorio en la PC
-```powershell
-cd $env:USERPROFILE\Documents\ai-ecosystem-esposa
-git pull origin main
-.\install.ps1
-```
-
-### Sincronizar cambios al repo
-```powershell
-git add -A
-git commit -m "descripcion del cambio"
-git push origin main
-```
-
----
-
-## Seguridad — reglas críticas
-
-- **NUNCA** hacer commit de API keys reales. Los archivos de config usan `TU_API_KEY_AQUI`.
-- El `.gitignore` bloquea `*.env` y `.env.*` — no añadir excepciones sin revisar.
-- Las keys reales viven solo en la PC del usuario, nunca en el repo.
-- Si accidentalmente se commitea una key: rotarla inmediatamente en el proveedor.
-
----
-
-## Modelos Ollama disponibles (instalar con `ollama pull`)
-
-| Modelo | Uso ideal |
+| Tool | Uso |
 |---|---|
-| `dolphin-mistral` | Default: tareas generales, control de PC, sin restricciones |
-| `dolphin-llama3:8b` | Mejor razonamiento, tareas complejas |
-| `qwen2.5:7b` | Código y programación |
-| `qwen2.5vl:7b` | Visión: analizar imágenes y capturas |
+| `list_calendars` | Ver calendarios disponibles |
+| `list_events` | Listar eventos en un rango de fechas |
+| `get_event` | Leer un evento específico |
+| `create_event` | Crear evento |
+| `update_event` | Modificar evento existente |
+| `delete_event` | Eliminar evento |
+| `suggest_time` | Encontrar horario disponible |
+| `respond_to_event` | Aceptar/rechazar invitación |
+
+### Gmail — `mcp__775a5ef3__*`
+
+| Tool | Uso |
+|---|---|
+| `search_threads` | Buscar emails (soporta operadores Gmail) |
+| `get_thread` | Leer conversación completa |
+| `create_draft` | Crear borrador (NO envía automáticamente) |
+| `list_labels` | Ver etiquetas disponibles |
+| `label_thread` | Etiquetar conversación |
+| `list_drafts` | Ver borradores existentes |
+
+### Google Drive — `mcp__6ca765ee__*`
+
+| Tool | Uso |
+|---|---|
+| `search_files` | Buscar archivos por nombre/tipo/contenido |
+| `read_file_content` | Leer contenido de un archivo |
+| `download_file_content` | Descargar archivo |
+| `create_file` | Crear archivo nuevo |
+| `get_file_metadata` | Ver metadatos (permisos, fechas, dueño) |
+| `list_recent_files` | Archivos abiertos/modificados recientemente |
+| `copy_file` | Copiar archivo |
+
+### Meta Ads — `mcp__c24bc423__*`
+
+| Tool | Uso |
+|---|---|
+| `ads_get_ad_accounts` | Ver cuentas publicitarias |
+| `ads_get_ad_entities` | Ver campañas / ad sets / ads |
+| `ads_insights_performance_trend` | Métricas de rendimiento en el tiempo |
+| `ads_insights_anomaly_signal` | Detectar anomalías en métricas |
+| `ads_create_campaign` | Crear campaña |
+| `ads_create_ad_set` | Crear conjunto de anuncios |
+| `ads_create_ad` | Crear anuncio |
+| `ads_create_creative` | Crear pieza creativa |
+| `ads_get_creatives` | Ver creativos existentes |
+| `ads_get_ad_images` / `ads_get_ad_videos` | Assets disponibles |
 
 ---
 
-## Coordinación multi-agente
+## Skills disponibles
 
-```
-investigación profunda  → Antigravity (Gemini)
-acción web real         → Comet (Perplexity)
-ejecución de código     → Open Interpreter (Ollama local)
-búsqueda con fuentes    → Perplexity MCP (directo, sin app)
-documentos del usuario  → NotebookLM MCP
-```
+| Trigger | Skill |
+|---|---|
+| "automatiza", "crea un workflow", "n8n" | `skills/n8n/SKILL.md` |
+| "crea un PR", "sube al repo", "commitea" | `skills/github/SKILL.md` |
+| "agenda", "calendario", "reunión", "evento" | `skills/google-calendar/SKILL.md` |
+| "busca el email", "redacta un mail", "gmail" | `skills/gmail/SKILL.md` |
+| "busca en Drive", "lee el doc", "archivo de Google" | `skills/google-drive/SKILL.md` |
+| "campañas", "ads", "facebook", "instagram", "meta" | `skills/meta-ads/SKILL.md` |
 
-**Combos potentes:**
-- `Antigravity + Open Interpreter` = investigar → ejecutar
-- `Antigravity + Comet` = investigar → actuar en la web
-- `Perplexity MCP + NotebookLM` = web + documentos propios
+**Skills locales (solo disponibles con Claude Desktop en Windows):**
+| Trigger | Skill |
+|---|---|
+| "navega a", "formulario", "scraping" | `skills/comet-browser/SKILL.md` |
+| "organiza archivos", "script", "procesa CSV" | `skills/open-interpreter/SKILL.md` |
+| "usa Gemini", "tarea larga" | `skills/antigravity/SKILL.md` |
+| "busca en mis documentos" | `skills/notebooklm/SKILL.md` |
+| "busca con fuentes" | `skills/perplexity-search/SKILL.md` |
+| "modelo local", "offline" | `skills/ollama-local/SKILL.md` |
+
+---
+
+## Reglas de eficiencia
+
+- **Lanzar agentes en paralelo** cuando las tareas son independientes — usar el tool `Agent` con múltiples llamadas en el mismo mensaje.
+- **GitHub**: preferir `push_files` (múltiples archivos en un commit) sobre commits individuales.
+- **n8n**: NUNCA saltear `get_node_types` — los nombres de parámetros incorrectos generan workflows inválidos.
+- **Gmail**: usar `create_draft` y mostrar el borrador al usuario antes de cualquier envío. No enviar sin confirmación explícita.
+- **Meta Ads**: leer antes de escribir — siempre verificar la estructura de cuenta/campaña antes de crear o modificar.
+- **Bash pre-aprobados**: git, ls, find, grep, cat — sin prompts de permiso.
+
+---
+
+## Seguridad
+
+- **NUNCA** commitear API keys reales. Usar placeholders `TU_KEY_AQUI`.
+- Si se commitea una key accidentalmente: rotarla de inmediato en el proveedor.
+- Antes de cualquier acción destructiva (delete, force push, drop): confirmar con el usuario.

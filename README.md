@@ -1,85 +1,42 @@
-# AI Ecosystem — Setup para ocp316@gmail.com
+# ai-ecosystem-esposa
 
-Repositorio de configuración del ecosistema AI para replicar en cualquier PC Windows nuevo.
+Configuración de Claude Code para Daniel — optimizado para sesiones remotas y locales.
 
-## Herramientas incluidas
-
-| Herramienta | Plan | Descripción |
-|---|---|---|
-| **Claude Desktop** | Claude Pro | App principal con MCPs configurados |
-| **Desktop Commander** | Incluido | Control de archivos y terminal desde Claude |
-| **Perplexity MCP** | Perplexity Pro | Búsqueda web avanzada desde Claude |
-| **Antigravity** | Gemini Pro | Agente Gemini para tareas paralelas |
-| **Comet** | Perplexity Pro | Agente de navegación web autónoma |
-| **Open Interpreter** | Gratis | Ejecutor autónomo de código Python en la PC |
-| **Ollama** | Gratis | Servidor local de LLMs |
-
-> **Nota:** Este setup NO incluye Codex CLI / ChatGPT.
-
-## Estructura del repositorio
+## Estructura
 
 ```
-ai-ecosystem-esposa/
-├── install.ps1                          <- Script de instalación
-├── README.md                            <- Este archivo
-├── configs/
-│   ├── claude_desktop_config.json       <- MCPs de Claude Desktop
-│   ├── settings.json                    <- Configuración de Claude Code
-│   └── open-interpreter/
-│       └── config.yaml                  <- Perfil Ollama por defecto
+├── CLAUDE.md                     ← Leído automáticamente: MCPs, skills, reglas
+├── .claude/settings.json         ← Permisos preaprobados (sin prompts)
+├── configs/settings.json         ← Settings globales de Claude Code
 └── skills/
-    ├── comet-browser/SKILL.md           <- Navegación web con Comet
-    ├── open-interpreter/SKILL.md        <- Ejecución de código
-    ├── antigravity/SKILL.md             <- Agente Gemini paralelo
-    └── notebooklm/SKILL.md              <- Consulta de documentos
+    ├── github/                   ← GitHub MCP (remoto)
+    ├── n8n/                      ← n8n automatización (remoto)
+    ├── google-calendar/          ← Calendar MCP (remoto)
+    ├── gmail/                    ← Gmail MCP (remoto)
+    ├── google-drive/             ← Drive MCP (remoto)
+    ├── meta-ads/                 ← Meta Ads MCP (remoto)
+    ├── comet-browser/            ← Comet (local, Claude Desktop)
+    ├── open-interpreter/         ← Open Interpreter (local)
+    ├── antigravity/              ← Antigravity/Gemini (local)
+    ├── notebooklm/               ← NotebookLM MCP (local)
+    ├── perplexity-search/        ← Perplexity MCP (local)
+    └── ollama-local/             ← Ollama local (local)
 ```
 
-## Instalación en PC nuevo
+## MCPs activos en sesiones remotas
+| MCP | Namespace |
+|---|---|
+| GitHub | `mcp__github__*` |
+| n8n | `mcp__6fe38136__*` |
+| Google Calendar | `mcp__68c285f0__*` |
+| Gmail | `mcp__775a5ef3__*` |
+| Google Drive | `mcp__6ca765ee__*` |
+| Meta Ads | `mcp__c24bc423__*` |
 
-### Prerrequisitos
-- Windows 10/11
-- PowerShell 5.1+
-- Python 3.10+ instalado
-
-### Pasos
-
-1. **Clonar el repositorio**
-   ```powershell
-   git clone https://github.com/ocp316/ai-ecosystem.git
-   cd ai-ecosystem
-   ```
-
-2. **Permitir ejecución de scripts** (como Administrador)
-   ```powershell
-   Set-ExecutionPolicy Bypass -Scope Process -Force
-   ```
-
-3. **Ejecutar el instalador**
-   ```powershell
-   .\install.ps1
-   ```
-
-4. **Agregar tu Perplexity API key** en:
-   ```
-   %APPDATA%\Claude\claude_desktop_config.json
-   ```
-   Reemplaza `TU_API_KEY_AQUI` con tu key real.
-
-5. **Reiniciar Claude Desktop** para que carguen los MCPs.
-
-## Pasos manuales
-
-**Ollama**
-- Descargar desde https://ollama.com e instalar
-- Luego: `ollama pull dolphin-mistral`
-
-**LM Studio** (opcional)
-- Descargar desde https://lmstudio.ai
-
-## Seguridad
-
-- El archivo `configs/claude_desktop_config.json` usa el placeholder `TU_API_KEY_AQUI`
-- **Nunca hagas commit de API keys reales**
-
----
-*Setup preparado por Daniel — Abril 2026*
+## Instalar settings locales (Claude Desktop en Windows)
+```powershell
+Copy-Item configs\settings.json "$env:USERPROFILE\.claude\settings.json"
+$dst = "$env:USERPROFILE\.claude\skills"
+New-Item -ItemType Directory -Force -Path $dst | Out-Null
+Copy-Item skills\* $dst -Recurse -Force
+```
