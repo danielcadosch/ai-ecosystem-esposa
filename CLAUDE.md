@@ -101,6 +101,7 @@ Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflo
 
 ## Skills disponibles
 
+### Infraestructura
 | Trigger | Skill |
 |---|---|
 | "automatiza", "crea un workflow", "n8n" | `skills/n8n/SKILL.md` |
@@ -108,8 +109,19 @@ Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflo
 | "agenda", "calendario", "reunión", "evento" | `skills/google-calendar/SKILL.md` |
 | "busca el email", "redacta un mail", "gmail" | `skills/gmail/SKILL.md` |
 | "busca en Drive", "lee el doc", "archivo de Google" | `skills/google-drive/SKILL.md` |
-| "campañas", "ads", "facebook", "instagram", "meta" | `skills/meta-ads/SKILL.md` |
 | "busca en mis documentos", "en mi notebook" | `skills/notebooklm/SKILL.md` |
+
+### Marketing
+| Trigger | Skill |
+|---|---|
+| "campañas", "ads", "facebook", "instagram", "meta" | `skills/meta-ads/SKILL.md` |
+| "escribe un copy", "redacta un anuncio", "headline" | `skills/copy-marketing/SKILL.md` |
+| "secuencia de emails", "campaña de email", "nurturing" | `skills/email-marketing/SKILL.md` |
+| "calendario editorial", "planifica el contenido" | `skills/calendario-contenido/SKILL.md` |
+| "audiencia personalizada", "lookalike", "retargeting" | `skills/audiencias-meta/SKILL.md` |
+| "reporte de ads", "métricas", "cómo están las campañas" | `skills/reportes-marketing/SKILL.md` |
+| "A/B test", "testea variantes", "prueba el copy" | `skills/ab-testing-ads/SKILL.md` |
+| "brief", "instrucciones para el diseñador" | `skills/brief-creativo/SKILL.md` |
 
 ---
 
@@ -119,7 +131,7 @@ Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflo
 - **GitHub**: preferir `push_files` (múltiples archivos en un commit) sobre commits individuales.
 - **n8n**: NUNCA saltear `get_node_types` — los nombres de parámetros incorrectos generan workflows inválidos.
 - **Gmail**: usar `create_draft` y mostrar al usuario antes de cualquier envío. No enviar sin confirmación explícita.
-- **Meta Ads**: leer antes de escribir — verificar estructura de cuenta antes de crear o modificar.
+- **Meta Ads**: leer antes de escribir — verificar estructura de cuenta antes de crear o modificar. Siempre crear en estado `PAUSED`.
 - **Bash pre-aprobados**: git, ls, find, grep, cat — sin prompts de permiso.
 
 ---
