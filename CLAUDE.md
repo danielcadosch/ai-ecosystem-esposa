@@ -34,94 +34,62 @@ Restringido al repo `danielcadosch/ai-ecosystem-esposa`.
 | `mcp__github__subscribe_pr_activity` | Escuchar eventos de PR (CI, reviews) |
 
 ### n8n Workflow Automation — `mcp__6fe38136__*`
-Construir, validar y publicar workflows de automatización.
 
-**Flujo obligatorio para crear un workflow:**
-1. `get_sdk_reference` — leer patrones y guías del SDK
-2. `search_nodes` — buscar nodos por servicio (ej: "gmail", "schedule")
-3. `get_node_types` — obtener tipos exactos de parámetros (NO saltear este paso)
-4. `validate_workflow` — validar el código antes de crear
-5. `create_workflow_from_code` — crear en n8n
-6. `publish_workflow` — activar
+**Flujo obligatorio:** `get_sdk_reference` → `search_nodes` → `get_node_types` → `validate_workflow` → `create_workflow_from_code` → `publish_workflow`
 
-Otros tools útiles: `search_workflows`, `get_workflow_details`, `update_workflow`, `execute_workflow`, `get_execution`
+Otros: `search_workflows`, `get_workflow_details`, `update_workflow`, `execute_workflow`, `get_execution`
 
 ### Google Calendar — `mcp__68c285f0__*`
-
-| Tool | Uso |
-|---|---|
-| `list_calendars` | Ver calendarios disponibles |
-| `list_events` | Listar eventos en un rango de fechas |
-| `get_event` | Leer un evento específico |
-| `create_event` | Crear evento |
-| `update_event` | Modificar evento existente |
-| `delete_event` | Eliminar evento |
-| `suggest_time` | Encontrar horario disponible |
-| `respond_to_event` | Aceptar/rechazar invitación |
+`list_calendars`, `list_events`, `get_event`, `create_event`, `update_event`, `delete_event`, `suggest_time`, `respond_to_event`
 
 ### Gmail — `mcp__775a5ef3__*`
-
-| Tool | Uso |
-|---|---|
-| `search_threads` | Buscar emails (soporta operadores Gmail) |
-| `get_thread` | Leer conversación completa |
-| `create_draft` | Crear borrador (NO envía automáticamente) |
-| `list_labels` | Ver etiquetas disponibles |
-| `label_thread` | Etiquetar conversación |
-| `list_drafts` | Ver borradores existentes |
+`search_threads`, `get_thread`, `create_draft`, `list_labels`, `label_thread`, `list_drafts`
 
 ### Google Drive — `mcp__6ca765ee__*`
-
-| Tool | Uso |
-|---|---|
-| `search_files` | Buscar archivos por nombre/tipo/contenido |
-| `read_file_content` | Leer contenido de un archivo |
-| `download_file_content` | Descargar archivo |
-| `create_file` | Crear archivo nuevo |
-| `get_file_metadata` | Ver metadatos (permisos, fechas, dueño) |
-| `list_recent_files` | Archivos abiertos/modificados recientemente |
-| `copy_file` | Copiar archivo |
+`search_files`, `read_file_content`, `download_file_content`, `create_file`, `get_file_metadata`, `list_recent_files`, `copy_file`
 
 ### Meta Ads — `mcp__c24bc423__*`
-
-| Tool | Uso |
-|---|---|
-| `ads_get_ad_accounts` | Ver cuentas publicitarias |
-| `ads_get_ad_entities` | Ver campañas / ad sets / ads |
-| `ads_insights_performance_trend` | Métricas de rendimiento en el tiempo |
-| `ads_insights_anomaly_signal` | Detectar anomalías en métricas |
-| `ads_create_campaign` | Crear campaña |
-| `ads_create_ad_set` | Crear conjunto de anuncios |
-| `ads_create_ad` | Crear anuncio |
-| `ads_create_creative` | Crear pieza creativa |
-| `ads_get_creatives` | Ver creativos existentes |
-| `ads_get_ad_images` / `ads_get_ad_videos` | Assets disponibles |
+`ads_get_ad_accounts`, `ads_get_ad_entities`, `ads_insights_performance_trend`, `ads_insights_anomaly_signal`, `ads_create_campaign`, `ads_create_ad_set`, `ads_create_ad`, `ads_create_creative`, `ads_get_creatives`, `ads_get_ad_images`, `ads_get_ad_videos`
 
 ---
 
 ## Skills disponibles
 
-### Infraestructura
+### Infraestructura & herramientas
 | Trigger | Skill |
 |---|---|
 | "automatiza", "crea un workflow", "n8n" | `skills/n8n/SKILL.md` |
 | "sube al repo", "commitea", "PR" | `skills/github/SKILL.md` |
-| "agenda", "calendario", "reunión", "evento" | `skills/google-calendar/SKILL.md` |
-| "busca el email", "redacta un mail", "gmail" | `skills/gmail/SKILL.md` |
-| "busca en Drive", "lee el doc", "archivo de Google" | `skills/google-drive/SKILL.md` |
-| "busca en mis documentos", "en mi notebook" | `skills/notebooklm/SKILL.md` |
+| "agenda", "calendario", "reunión" | `skills/google-calendar/SKILL.md` |
+| "busca el email", "redacta un mail" | `skills/gmail/SKILL.md` |
+| "busca en Drive", "lee el doc" | `skills/google-drive/SKILL.md` |
+| "busca en mis documentos", "notebook" | `skills/notebooklm/SKILL.md` |
 
 ### Marketing
 | Trigger | Skill |
 |---|---|
-| "campañas", "ads", "facebook", "instagram", "meta" | `skills/meta-ads/SKILL.md` |
-| "escribe un copy", "redacta un anuncio", "headline" | `skills/copy-marketing/SKILL.md` |
-| "secuencia de emails", "campaña de email", "nurturing" | `skills/email-marketing/SKILL.md` |
-| "calendario editorial", "planifica el contenido" | `skills/calendario-contenido/SKILL.md` |
-| "audiencia personalizada", "lookalike", "retargeting" | `skills/audiencias-meta/SKILL.md` |
-| "reporte de ads", "métricas", "cómo están las campañas" | `skills/reportes-marketing/SKILL.md` |
-| "A/B test", "testea variantes", "prueba el copy" | `skills/ab-testing-ads/SKILL.md` |
+| "campañas", "ads", "meta", "facebook" | `skills/meta-ads/SKILL.md` |
+| "escribe un copy", "headline", "anuncio" | `skills/copy-marketing/SKILL.md` |
+| "campaña de email", "nurturing" | `skills/email-marketing/SKILL.md` |
+| "calendario editorial", "plan de contenido" | `skills/calendario-contenido/SKILL.md` |
+| "audiencia personalizada", "lookalike" | `skills/audiencias-meta/SKILL.md` |
+| "reporte de ads", "métricas" | `skills/reportes-marketing/SKILL.md` |
+| "A/B test", "testea variantes" | `skills/ab-testing-ads/SKILL.md` |
 | "brief", "instrucciones para el diseñador" | `skills/brief-creativo/SKILL.md` |
+| "Twitter/X", "grow on X", "thread" | `skills/x-twitter-growth/SKILL.md` |
+
+### Comunidad (Claude Code ecosystem)
+| Trigger | Skill | Fuente |
+|---|---|---|
+| "crea un MCP", "MCP server" | `skills/mcp-builder/SKILL.md` | Anthropic oficial |
+| "crea una skill", "mejora esta skill" | `skills/skill-creator/SKILL.md` | Anthropic oficial |
+| "evalúa esta skill", "audita el SKILL.md" | `skills/skill-judge/SKILL.md` | softaworks |
+| "escribe un plan", "plan antes de implementar" | `skills/writing-plans/SKILL.md` | obra/superpowers |
+| "ejecuta el plan con subagentes" | `skills/subagent-driven-development/SKILL.md` | obra/superpowers |
+| "verifica antes de decir que terminó" | `skills/verification-before-completion/SKILL.md` | obra/superpowers |
+| "despacha agentes en paralelo" | `skills/dispatching-parallel-agents/SKILL.md` | obra/superpowers |
+| "agentation", "toolbar de feedback" | `skills/agentation/SKILL.md` | benjitaylor |
+| "busca una skill", "encuentra una skill" | `skills/find-skills/SKILL.md` | vercel-labs |
 
 ---
 
