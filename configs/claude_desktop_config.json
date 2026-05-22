@@ -30,26 +30,6 @@
     "markitdown": {
       "command": "markitdown-mcp",
       "args": []
-    },
-    "gmail": {
-      "type": "http",
-      "url": "https://gmailmcp.googleapis.com/mcp/v1"
-    },
-    "google-calendar": {
-      "type": "http",
-      "url": "https://calendarmcp.googleapis.com/mcp/v1"
-    },
-    "google-drive": {
-      "type": "http",
-      "url": "https://drivemcp.googleapis.com/mcp/v1"
-    },
-    "facebook-ads": {
-      "type": "http",
-      "url": "https://mcp.facebook.com/ads"
-    },
-    "n8n": {
-      "type": "http",
-      "url": "https://n8n-je3s.srv1529880.hstgr.cloud/mcp-server/http"
     }
   },
   "preferences": {
